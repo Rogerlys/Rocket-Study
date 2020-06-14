@@ -1,3 +1,4 @@
+import 'package:actual/screens/StickyNotesScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/HomePage/InspirationalQuote.dart';
@@ -72,7 +73,9 @@ class HomePageScreen extends StatelessWidget {
                 HomePageBlock(
                     blockName: 'Sticky Notes',
                     blockColor: Colors.limeAccent,
-                    iconDisplay: Icon(Icons.note)),
+                    iconDisplay: Icon(Icons.note),
+                    routingLocation: StickNotesScreen.routeName,),
+                    
                 HomePageBlock(
                   blockName: 'Email',
                   blockColor: Colors.blueAccent,

@@ -1,6 +1,9 @@
 import 'package:actual/models/Pair.dart';
+import 'package:actual/widgets/TimeTable/NextEvent.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/TimeTable/EventWidget.dart';
+import '../widgets/TimeTable/EventWidget.dart';
 import '../widgets/TimeTable/EventWidget.dart';
 import '../widgets/TimeTable/NewEvent.dart';
 import '../widgets/TimeTable/Day.dart';
@@ -68,6 +71,33 @@ class _TimeTableState extends State<TimeTableScreen> {
       fit: BoxFit.cover, //can be Boxfit.fill
       height: MediaQuery.of(context).size.height * 0.4,
     );
+  }
+
+  Event _nextLesson() {
+    int current = DateTime.now().weekday - 1;
+    for(int i = 0; i <  7; i++) {
+      if(current >= 6) {
+        current = 0;
+      } else {
+        current++;
+      }
+      List<Event> temp = widget.days[current].events;
+      int now = DateTime.now().hour * 60 + DateTime.now().minute;
+      if(current == DateTime.now().weekday - 1) {
+        for(int j = 0; j < temp.length;j++) {
+          int eventTime = temp[j].time.hour * 60 + temp[j].time.minute;
+          if(now < eventTime) {
+            return temp[j];
+          }
+        }
+      }
+      else  {
+        if(temp.length > 0){
+          return temp[0];
+        }
+      }
+    }
+    return null;
   }
 
   @override
@@ -141,7 +171,33 @@ class _TimeTableState extends State<TimeTableScreen> {
                     bottomLeft: Radius.circular(80),
                     bottomRight: Radius.circular(80)),
                 //Use stack here to add the content at the top which can be the next lesson details.
-                child: appBarImage(context),
+                child: _nextLesson() == null ? appBarImage(context) : 
+                Stack(
+      children: <Widget>[
+        Container(
+          alignment: Alignment.center,
+          child: appBarImage(context),
+        ),
+        Container(
+            
+            alignment: Alignment.center,
+        
+            child: Column(
+              children: <Widget>[
+                Container(
+                    height: MediaQuery.of(context).size.height *0.32,
+                    child: Text(
+                    'Coming next',
+                    style: TextStyle(color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22.0),
+                  ),
+                ),
+                NextEvent(_nextLesson())
+              ],
+            )),
+      ],
+    ),
               ),
               SizedBox(height: 10),
               timeTableScreenBody
