@@ -30,13 +30,8 @@ class MyApp extends StatelessWidget {
     Pair("Saturday", []),
     Pair("Sunday", []),
   ];
-  List<Widget> notes = [
-      Note("Title 1", "passage 1"),
-      Note("Title 2", "passage 1"),
-      Note("Title 3", "passage 1"),
-      Note("Title 4", "passage 1"),
-  ];
-
+  final List<Note> _notes =[];
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -53,7 +48,7 @@ class MyApp extends StatelessWidget {
         TimeTableScreen.routeName: (ctx) => TimeTableScreen(_days),
         CompletedTaskScreen.routeName: (ctx) =>
             CompletedTaskScreen(_completedTask),
-        StickNotesScreen.routeName: (ctx) => StickNotesScreen(notes),
+        StickNotesScreen.routeName: (ctx) => StickNotesScreen(_notes),
       },
     );
   }
