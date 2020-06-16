@@ -13,21 +13,25 @@ class NoteDetailState extends State<NoteDetail> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return SingleChildScrollView(
-          child: Container(
-        color: widget.note.col,
-        child: Column(children: <Widget>[
-          Text(widget.note.title),
-          Text(widget.note.body),
-          Row(children: <Widget>[
-            FlatButton(child: Icon(Icons.arrow_back),
-            onPressed: ()=> ( Navigator.pop(context, true)),),
-            FlatButton(child: Icon(Icons.delete),
-              onPressed: ()=> widget.note.delete(widget.note.id),
-            )
-          ],)
-        ],),
+    return 
+          Scaffold(
+          appBar: AppBar(actions: <Widget>[
+              FlatButton(child: Icon(Icons.delete),
+                onPressed: ()=> widget.note.delete(widget.note.id),
+              )
+          ],),
+          backgroundColor: widget.note.col,
+          body: SingleChildScrollView(
+            child: Container(
+          color: widget.note.col,
+          child: Column(children: <Widget>[
+            Text(widget.note.title,
+            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
+            Text(widget.note.body,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
+          ],),
       ),
-    );
+    ),
+        );
   }
 }

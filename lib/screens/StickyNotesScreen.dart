@@ -59,6 +59,7 @@ class _StickNoteState extends State<StickNotesScreen> {
       await Navigator.push(context,
         MaterialPageRoute(builder: (context) => NoteDetail(note)));
   }
+
   Widget getStaggeredList() {
     return StaggeredGridView.countBuilder(
       crossAxisCount: 4,
@@ -83,7 +84,9 @@ class _StickNoteState extends State<StickNotesScreen> {
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               Text(
-                widget.notes[index].body,
+                widget.notes[index].body.length < 100 ?
+                widget.notes[index].body :
+                 widget.notes[index].body.substring(0,100) +'\n ....' ,
                 style: TextStyle(color: Colors.grey),
               ),
             ],
@@ -107,6 +110,8 @@ class _StickNoteState extends State<StickNotesScreen> {
           onPressed: () => startAddNewNote(context),
           backgroundColor: Colors.greenAccent,
         ),
+        floatingActionButtonLocation:
+          FloatingActionButtonLocation.centerFloat,
         body: getStaggeredList());
   }
 }
