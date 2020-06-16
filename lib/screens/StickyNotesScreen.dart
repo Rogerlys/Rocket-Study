@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/StickNotes/Note.dart';
 import '../widgets/StickNotes/NewNote.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'dart:math';
+import 'NoteDetail.dart';
 
 class StickNotesScreen extends StatefulWidget {
   static const routeName = "/Stick-Notes";
@@ -12,12 +14,6 @@ class StickNotesScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    notes.add(Note(
-        'd',
-        "title",
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galle",
-        null,
-        Color.fromRGBO(252, 252, 154, 1)));
     return _StickNoteState();
   }
 }
@@ -36,20 +32,20 @@ class _StickNoteState extends State<StickNotesScreen> {
   }
 
   void addNewNote(String title, String body) {
+    final List<Color> colours = [
+      Color.fromRGBO(252, 252, 154, 1),
+      Color.fromRGBO(252, 252, 252, 0.5),
+      Color.fromRGBO(252, 183, 249, 0.5),
+      Color.fromRGBO(252, 222, 183, 0.5),
+      Color.fromRGBO(252, 196, 183, 0.5),
+      Color.fromRGBO(159, 242, 156, 0.5),
+      Color.fromRGBO(242, 156, 156, 0.5),
+    ];
+    final _random = new Random();
+    int x = _random.nextInt(6);
     setState(() {
-      final List<Color> colours = [
-        Color.fromRGBO(252, 252, 154, 1),
-        Color.fromRGBO(252, 252, 252, 0.5),
-        Color.fromRGBO(252, 183, 249, 0.5),
-        Color.fromRGBO(252, 222, 183, 0.5),
-        Color.fromRGBO(252, 196, 183, 0.5),
-        Color.fromRGBO(159, 242, 156, 0.5),
-        Color.fromRGBO(242, 156, 156, 0.5),
-
-      ];
-
       widget.notes.add(
-          Note(DateTime.now().toString(), title, body, delete, colours[1]));
+          Note(DateTime.now().toString(), title, body, delete, colours[x]));
     });
   }
 
@@ -57,6 +53,47 @@ class _StickNoteState extends State<StickNotesScreen> {
     setState(() {
       widget.notes.removeWhere((item) => id == item.id);
     });
+  }
+
+  void goToNotesScreen(Note note) async {
+      await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => NoteDetail(note)));
+  }
+  Widget getStaggeredList() {
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 4,
+      physics: BouncingScrollPhysics(),
+      itemCount: widget.notes.length,
+      itemBuilder: (BuildContext context, int index) => new GestureDetector(
+        onTap: ()=> goToNotesScreen(widget.notes[index]),
+        //widget.notes[index] => the current note that we are on
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.blue,
+            ),
+            borderRadius: BorderRadius.circular(10.0),
+            color: widget.notes[index].col,
+          ),
+          child: Column(
+            children: <Widget>[
+              Text(
+                widget.notes[index].title,
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                widget.notes[index].body,
+                style: TextStyle(color: Colors.grey),
+              ),
+            ],
+          ),
+        ),
+      ),
+      staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
+      mainAxisSpacing: 4.0,
+      crossAxisSpacing: 4.0,
+    );
   }
 
   @override
@@ -70,13 +107,6 @@ class _StickNoteState extends State<StickNotesScreen> {
           onPressed: () => startAddNewNote(context),
           backgroundColor: Colors.greenAccent,
         ),
-        body: GridView.count(
-          primary: false,
-          padding: const EdgeInsets.all(20),
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
-          children: widget.notes.toList(),
-        ));
+        body: getStaggeredList());
   }
 }
