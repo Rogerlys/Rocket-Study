@@ -49,7 +49,7 @@ class _ToDoItemState extends State<ToDoItem> {
     var card = ClipRRect(
       borderRadius: BorderRadius.circular(50),
       child: Card(
-          color: Colors.yellow[200],
+          color: Colors.blue[50],
           margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
           elevation: 10,
           child: ListTile(

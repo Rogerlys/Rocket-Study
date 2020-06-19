@@ -44,6 +44,7 @@ class _PieChartState extends State<PieChartDiagram> {
           initialAngle: 0,
           dataMap: data,
           showLegends: true,
+          legendStyle: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ));
   }
 }

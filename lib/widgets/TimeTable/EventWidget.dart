@@ -72,7 +72,7 @@ class _EventWidgetState extends State<EventWidget> {
         borderRadius: BorderRadius.circular(50),
         child: Card(
             elevation: 50,
-            color: Colors.blue[50],
+            color: Colors.yellow[200],
             child: ListTile(
               title: Text(
                 this.widget.currentEvent.title,

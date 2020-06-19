@@ -3,8 +3,6 @@ import 'package:actual/widgets/TimeTable/NextEvent.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/TimeTable/EventWidget.dart';
-import '../widgets/TimeTable/EventWidget.dart';
-import '../widgets/TimeTable/EventWidget.dart';
 import '../widgets/TimeTable/NewEvent.dart';
 import '../widgets/TimeTable/Day.dart';
 import '../models/Event.dart';
@@ -54,45 +52,25 @@ class _TimeTableState extends State<TimeTableScreen> {
     });
   }
 
-  Image appBarImage(BuildContext context) {
-    int hour = DateTime.parse("2020-06-13 18:00:04Z").hour;
-    // int hour = DateTime.now().hour;
-    String imageUrl;
-
-    if (hour >= 6 && hour <= 11) imageUrl = 'assets/images/Sunrise.jpg';
-    if (hour > 11 && hour <= 16) imageUrl = 'assets/images/Afternoon.jpg';
-    if (hour > 16 && hour <= 19) imageUrl = 'assets/images/Sunset.jpg';
-    if (hour > 19 || hour < 6) imageUrl = 'assets/images/NightSky.jpg';
-
-    print(DateTime.now());
-
-    return Image.asset(
-      imageUrl,
-      fit: BoxFit.cover, //can be Boxfit.fill
-      height: MediaQuery.of(context).size.height * 0.4,
-    );
-  }
-
   Event _nextLesson() {
     int current = DateTime.now().weekday - 1;
-    for(int i = 0; i <  7; i++) {
-      if(current >= 6) {
+    for (int i = 0; i < 7; i++) {
+      if (current >= 6) {
         current = 0;
       } else {
         current++;
       }
       List<Event> temp = widget.days[current].events;
       int now = DateTime.now().hour * 60 + DateTime.now().minute;
-      if(current == DateTime.now().weekday - 1) {
-        for(int j = 0; j < temp.length;j++) {
+      if (current == DateTime.now().weekday - 1) {
+        for (int j = 0; j < temp.length; j++) {
           int eventTime = temp[j].time.hour * 60 + temp[j].time.minute;
-          if(now < eventTime) {
+          if (now < eventTime) {
             return temp[j];
           }
         }
-      }
-      else  {
-        if(temp.length > 0){
+      } else {
+        if (temp.length > 0) {
           return temp[0];
         }
       }
@@ -135,7 +113,7 @@ class _TimeTableState extends State<TimeTableScreen> {
             child: SingleChildScrollView(
                 child: Column(
               children: <Widget>[
-                SizedBox(height:10),
+                SizedBox(height: 10),
                 for (int i = 0;
                     i < widget.days[widget.selectedDay].events.length;
                     i++)
@@ -155,7 +133,7 @@ class _TimeTableState extends State<TimeTableScreen> {
           width: MediaQuery.of(context).size.width,
         ),
         Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.grey[200],
           floatingActionButton: FloatingActionButton(
             elevation: 20,
             child: Icon(Icons.add),
@@ -171,33 +149,40 @@ class _TimeTableState extends State<TimeTableScreen> {
                     bottomLeft: Radius.circular(80),
                     bottomRight: Radius.circular(80)),
                 //Use stack here to add the content at the top which can be the next lesson details.
-                child: _nextLesson() == null ? appBarImage(context) : 
-                Stack(
-      children: <Widget>[
-        Container(
-          alignment: Alignment.center,
-          child: appBarImage(context),
-        ),
-        Container(
-            
-            alignment: Alignment.center,
-        
-            child: Column(
-              children: <Widget>[
-                Container(
-                    height: MediaQuery.of(context).size.height *0.32,
-                    child: Text(
-                    'Coming next',
-                    style: TextStyle(color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22.0),
-                  ),
-                ),
-                NextEvent(_nextLesson())
-              ],
-            )),
-      ],
-    ),
+                child: _nextLesson() == null
+                    ? Image.asset(
+                        'assets/images/ToDoScreenAppBar.jpg',
+                        fit: BoxFit.cover, //can be Boxfit.fill
+                      )
+                    : Stack(
+                        children: <Widget>[
+                          Container(
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              'assets/images/ToDoScreenAppBar.jpg',
+                              fit: BoxFit.cover, //can be Boxfit.fill
+                            ),
+                          ),
+                          Container(
+                              alignment: Alignment.center,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.32,
+                                    child: Text(
+                                      'Coming next',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22.0),
+                                    ),
+                                  ),
+                                  NextEvent(_nextLesson())
+                                ],
+                              )),
+                        ],
+                      ),
               ),
               SizedBox(height: 10),
               timeTableScreenBody
