@@ -103,10 +103,6 @@ class _TimeTableState extends State<TimeTableScreen> {
                               widget.selectedDay, i, widget.days[i].weekday))
                   ],
                 ))),
-        // Divider(
-        //   color: Colors.red,
-        //   thickness: 50,
-        // ),
         Container(
             height: MediaQuery.of(context).size.height * 0.55,
             width: MediaQuery.of(context).size.width * 0.8,

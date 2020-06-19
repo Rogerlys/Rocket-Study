@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 
 class NewNote extends StatefulWidget {
   final Function add;
@@ -24,7 +23,6 @@ class _NoteState extends State<NewNote> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Card(child: Column(
       children: [
         TextField(

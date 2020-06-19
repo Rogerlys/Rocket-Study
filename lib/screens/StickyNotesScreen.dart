@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../widgets/StickNotes/Note.dart';
 import '../widgets/StickNotes/NewNote.dart';
@@ -13,7 +12,6 @@ class StickNotesScreen extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _StickNoteState();
   }
 }
@@ -101,7 +99,6 @@ class _StickNoteState extends State<StickNotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         appBar: AppBar(title: Text("Stick notes")),
         floatingActionButton: FloatingActionButton(

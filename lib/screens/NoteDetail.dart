@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/StickNotes/Note.dart';
 
 class NoteDetail extends StatefulWidget {
-  Note note;
+  final Note note;
   NoteDetail(this.note);
   @override
   State<StatefulWidget> createState() {
@@ -12,7 +12,6 @@ class NoteDetail extends StatefulWidget {
 class NoteDetailState extends State<NoteDetail> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return 
           Scaffold(
           appBar: AppBar(actions: <Widget>[

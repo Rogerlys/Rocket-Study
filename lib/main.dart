@@ -7,7 +7,6 @@ import './screens/HomePageScreen.dart';
 import './screens/CompletedTaskScreen.dart';
 import './models/ToDo.dart';
 import './models/Pair.dart';
-import './models/Event.dart';
 import './widgets/StickNotes/Note.dart';
 
 void main() {
