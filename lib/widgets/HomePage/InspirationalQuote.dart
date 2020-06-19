@@ -18,7 +18,7 @@ class InspirationalQuote extends StatelessWidget {
         child: Column(
           children: <Widget>[
             Card(
-              color: Colors.amber,
+              color: Colors.yellow,
               elevation: 5,
               child: Container(
                 alignment: Alignment.center,

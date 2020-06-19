@@ -11,21 +11,18 @@ class Day extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.blue[50]), shape: BoxShape.circle),
+          border: Border.all(
+              color: selectedDay == id ? Colors.green : Colors.red, width: 2),
+          shape: BoxShape.circle),
       child: CircleAvatar(
-        radius: selectedDay == id ? 32 : 24,
-        backgroundColor: selectedDay == id ? Colors.green : Colors.red,
-        child: CircleAvatar(
-          radius: selectedDay == id ? 30 : 22,
-          backgroundColor:
-              selectedDay == id ? Colors.greenAccent : Colors.white,
-          child: Text(
-            weekday[0] + weekday[1],
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                color: Colors.blue[700]),
-          ),
+        radius: selectedDay == id ? 30 : 22,
+        backgroundColor: selectedDay == id ? Colors.greenAccent : Colors.white,
+        child: Text(
+          weekday[0] + weekday[1],
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Color(0xff2d386b)),
         ),
       ),
     );

@@ -163,24 +163,7 @@ class _TimeTableState extends State<TimeTableScreen> {
                               fit: BoxFit.cover, //can be Boxfit.fill
                             ),
                           ),
-                          Container(
-                              alignment: Alignment.center,
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.32,
-                                    child: Text(
-                                      'Coming next',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 22.0),
-                                    ),
-                                  ),
-                                  NextEvent(_nextLesson())
-                                ],
-                              )),
+                          NextEvent(_nextLesson())
                         ],
                       ),
               ),
