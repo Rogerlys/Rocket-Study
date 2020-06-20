@@ -5,8 +5,6 @@ import '../widgets/StickyNotes/NewNote.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math';
 
-import 'NoteDetail.dart';
-
 class StickNotesScreen extends StatefulWidget {
   static const routeName = "/Stick-Notes";
   final List<Note> notes;
@@ -134,60 +132,3 @@ class _StickNoteState extends State<StickNotesScreen> {
     );
   }
 }
-
-// return Scaffold(
-//     appBar: AppBar(title: Text("Stick notes")),
-//     floatingActionButton: FloatingActionButton(
-//       elevation: 20,
-//       child: Icon(Icons.add),
-//       onPressed: () => startAddNewNote(context),
-//       backgroundColor: Colors.greenAccent,
-//     ),
-//     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-//     body: getStaggeredList());
-
-//  void goToNotesScreen(Note note) async {
-//     await Navigator.push(
-//         context, MaterialPageRoute(builder: (context) => NoteDetail(note)));
-//   }
-
-//   Widget getStaggeredList() {
-//     return StaggeredGridView.countBuilder(
-//       crossAxisCount: 4,
-//       physics: BouncingScrollPhysics(),
-//       itemCount: widget.notes.length,
-//       itemBuilder: (BuildContext context, int index) => new GestureDetector(
-//         onTap: () =>
-//             goToNotesScreen(widget.notes[index]), //add dialog to ask to delete
-//         onLongPress: () => delete(widget.notes[index].id),
-//         //widget.notes[index] => the current note that we are on
-//         child: Container(
-//           padding: EdgeInsets.all(10),
-//           decoration: BoxDecoration(
-//             border: Border.all(
-//               color: Colors.blue,
-//             ),
-//             borderRadius: BorderRadius.circular(10.0),
-//             color: widget.notes[index].col,
-//           ),
-//           child: Column(
-//             children: <Widget>[
-//               Text(
-//                 widget.notes[index].title,
-//                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-//               ),
-//               Text(
-//                 widget.notes[index].body.length < 100
-//                     ? widget.notes[index].body
-//                     : widget.notes[index].body.substring(0, 100) + '\n ....',
-//                 style: TextStyle(color: Colors.grey),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       staggeredTileBuilder: (int index) => StaggeredTile.fit(2),
-//       mainAxisSpacing: 4.0,
-//       crossAxisSpacing: 4.0,
-//     );
-//   }
