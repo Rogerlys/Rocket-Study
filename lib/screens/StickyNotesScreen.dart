@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import '../widgets/StickNotes/Note.dart';
+import 'package:actual/models/Note.dart';
 import '../widgets/StickNotes/NewNote.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math';
 import 'NoteDetail.dart';
+
 
 class StickNotesScreen extends StatefulWidget {
   static const routeName = "/Stick-Notes";

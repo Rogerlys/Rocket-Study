@@ -1,3 +1,4 @@
+import 'package:actual/models/Note.dart';
 import 'package:actual/screens/StickyNotesScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import './screens/HomePageScreen.dart';
 import './screens/CompletedTaskScreen.dart';
 import './models/ToDo.dart';
 import './models/Pair.dart';
-import './widgets/StickNotes/Note.dart';
+
 
 void main() {
   runApp(MyApp());

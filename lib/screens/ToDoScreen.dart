@@ -57,8 +57,8 @@ class _ToDoScreenState extends State<ToDoScreen> {
   }
 
   Image appBarImage(BuildContext context) {
-    int hour = DateTime.parse("2020-06-13 18:00:04Z").hour;
-    // int hour = DateTime.now().hour;
+    // int hour = DateTime.parse("2020-06-13 18:00:04Z").hour;
+    int hour = DateTime.now().hour;
     String imageUrl;
 
     if (hour >= 6 && hour <= 11) imageUrl = 'assets/images/Sunrise.jpg';

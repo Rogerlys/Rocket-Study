@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/StickNotes/Note.dart';
+
+import 'package:actual/models/Note.dart';
 
 class NoteDetail extends StatefulWidget {
   final Note note;
