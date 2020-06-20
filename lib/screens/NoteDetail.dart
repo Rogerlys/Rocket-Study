@@ -15,11 +15,7 @@ class NoteDetailState extends State<NoteDetail> {
   Widget build(BuildContext context) {
     return 
           Scaffold(
-          appBar: AppBar(actions: <Widget>[
-              FlatButton(child: Icon(Icons.delete),
-                onPressed: ()=> widget.note.delete(widget.note.id),
-              )
-          ],),
+          appBar: AppBar(),
           backgroundColor: widget.note.col,
           body: SingleChildScrollView(
             child: Container(

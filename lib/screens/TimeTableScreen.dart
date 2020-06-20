@@ -137,7 +137,7 @@ class _TimeTableState extends State<TimeTableScreen> {
             backgroundColor: Colors.greenAccent,
           ),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.endFloat,
           body: Column(
             children: <Widget>[
               ClipRRect(
