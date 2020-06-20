@@ -40,9 +40,12 @@ class _StickNoteState extends State<StickNotesScreen> {
       Color.fromRGBO(252, 196, 183, 0.5),
       Color.fromRGBO(159, 242, 156, 0.5),
       Color.fromRGBO(242, 156, 156, 0.5),
+      Colors.redAccent,
+      Colors.blue[50],
+      Colors.blueGrey,
+      Colors.amberAccent
     ];
-    final _random = new Random();
-    int x = _random.nextInt(6);
+    int x =  Random().nextInt(11);
     setState(() {
       widget.notes
           .add(Note(DateTime.now().toString(), title, body, colours[x]));
@@ -55,9 +58,10 @@ class _StickNoteState extends State<StickNotesScreen> {
     });
   }
 
-  num calcNoteHeight(String body) {
-    int length = body.length;
-    if (length < 20) return 1;
+  num calcNoteHeight(String title, String body) {
+    int length = title.length + body.length;
+    if (length < 30) return 1;
+    if (length < 50) return 1.5;
     if (length < 100) return 2;
     if (length > 100) return 2.5;
   }
@@ -81,11 +85,6 @@ class _StickNoteState extends State<StickNotesScreen> {
               expandedHeight: 250,
               floating: false,
               pinned: false,
-              // title: Text(
-              //   'Sticky Notes',
-              //   textAlign: TextAlign.center,
-              //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26),
-              // ),
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
                 background: ClipRRect(
@@ -127,7 +126,7 @@ class _StickNoteState extends State<StickNotesScreen> {
             ],
             staggeredTiles: <StaggeredTile>[
               for (var i = 0; i < widget.notes.length; i++)
-                StaggeredTile.count(2, calcNoteHeight(widget.notes[i].body))
+                StaggeredTile.count(2, calcNoteHeight(widget.notes[i].title, widget.notes[i].body))
             ],
           )
         ],
