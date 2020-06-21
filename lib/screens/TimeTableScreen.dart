@@ -18,12 +18,13 @@ class TimeTableScreen extends StatefulWidget {
 class _TimeTableState extends State<TimeTableScreen> {
   void startAddNewEvent(BuildContext cxt) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: cxt,
         builder: (_) {
-          return GestureDetector(
-            onTap: () {},
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             child: NewEvent(addNewEvent),
-            behavior: HitTestBehavior.opaque,
           );
         });
   }
@@ -78,55 +79,46 @@ class _TimeTableState extends State<TimeTableScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        Image.asset(
-          'assets/images/LightBlue1.jpg',
-          fit: BoxFit.cover,
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-        ),
-        Scaffold(
-          backgroundColor: Colors.grey[200],
-          floatingActionButton: FloatingActionButton(
-            elevation: 20,
-            child: Icon(Icons.add),
-            onPressed: () => startAddNewEvent(context),
-            backgroundColor: Colors.greenAccent,
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.endFloat,
-          body: Column(
-            children: <Widget>[
-              ClipRRect(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(80),
-                    bottomRight: Radius.circular(80)),
-                //Use stack here to add the content at the top which can be the next lesson details.
-                child: _nextLesson() == null
-                    ? Image.asset(
-                        'assets/images/ToDoScreenAppBar.jpg',
-                        fit: BoxFit.cover, //can be Boxfit.fill
-                      )
-                    : Stack(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'assets/images/ToDoScreenAppBar.jpg',
-                              fit: BoxFit.cover, //can be Boxfit.fill
-                            ),
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      floatingActionButton: FloatingActionButton(
+        elevation: 20,
+        child: Icon(Icons.add),
+        onPressed: () => startAddNewEvent(context),
+        backgroundColor: Colors.greenAccent,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(80),
+                  bottomRight: Radius.circular(80)),
+              //Use stack here to add the content at the top which can be the next lesson details.
+              child: _nextLesson() == null
+                  ? Image.asset(
+                      'assets/images/ToDoScreenAppBar.jpg',
+                      fit: BoxFit.cover, //can be Boxfit.fill
+                    )
+                  : Stack(
+                      children: <Widget>[
+                        Container(
+                          alignment: Alignment.center,
+                          child: Image.asset(
+                            'assets/images/ToDoScreenAppBar.jpg',
+                            fit: BoxFit.cover, //can be Boxfit.fill
                           ),
-                          NextEvent(_nextLesson())
-                        ],
-                      ),
-              ),
-              SizedBox(height: 10),
-              TimeTableScreenBody(widget.days, _delete),
-            ],
-          ),
+                        ),
+                        NextEvent(_nextLesson())
+                      ],
+                    ),
+            ),
+            SizedBox(height: 10),
+            TimeTableScreenBody(widget.days, _delete),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

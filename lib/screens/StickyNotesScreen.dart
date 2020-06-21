@@ -19,6 +19,7 @@ class StickNotesScreen extends StatefulWidget {
 class _StickNoteState extends State<StickNotesScreen> {
   void startAddNewNote(BuildContext context) {
     showModalBottomSheet(
+        isScrollControlled: true,
         context: context,
         builder: (_) {
           return GestureDetector(

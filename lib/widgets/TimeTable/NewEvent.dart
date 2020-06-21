@@ -51,7 +51,7 @@ class NewEventState extends State<NewEvent> {
       elevation: 7,
       child: Container(
         padding: EdgeInsets.all(10),
-        child: Column(children: <Widget>[
+        child: Column(mainAxisSize: MainAxisSize.min,children: <Widget>[
           DropdownButton<String>(
             items: weekdays.map((String day) {
               return DropdownMenuItem<String>(
