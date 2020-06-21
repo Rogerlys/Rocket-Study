@@ -28,7 +28,7 @@ class _EventWidgetState extends State<EventWidget> {
       borderRadius: BorderRadius.circular(50),
       child: Card(
           elevation: 50,
-          color: Colors.green[50],
+          color: Colors.green[100],
           child: ListTile(
             onLongPress: () => showDialog(
                 context: context,
@@ -51,11 +51,10 @@ class _EventWidgetState extends State<EventWidget> {
                     )),
             title: Text(
               this.widget.currentEvent.title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             subtitle: Text(
               this.widget.currentEvent.place,
-              style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
             ),
             trailing: Container(
               decoration: BoxDecoration(
