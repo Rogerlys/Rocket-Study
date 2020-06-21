@@ -58,7 +58,7 @@ class HomePageScreen extends StatelessWidget {
               children: <Widget>[
                 HomePageBlock(
                   blockName: 'To-Do List',
-                  blockColor: Colors.redAccent,
+                  blockColor: Colors.blueAccent,
                   iconDisplay: Icon(
                     Icons.assignment_turned_in,
                   ),
@@ -66,7 +66,7 @@ class HomePageScreen extends StatelessWidget {
                 ),
                 HomePageBlock(
                   blockName: 'Timetable',
-                  blockColor: Colors.orangeAccent,
+                  blockColor: Colors.greenAccent,
                   iconDisplay: Icon(Icons.schedule),
                   routingLocation: TimeTableScreen.routeName
                 ),
@@ -78,7 +78,7 @@ class HomePageScreen extends StatelessWidget {
                     
                 HomePageBlock(
                   blockName: 'Email',
-                  blockColor: Colors.blueAccent,
+                  blockColor: Colors.redAccent,
                   iconDisplay: Icon(Icons.mail_outline),
                   urlLocation: 'https://login.microsoftonline.com/',
                 ),
@@ -89,7 +89,7 @@ class HomePageScreen extends StatelessWidget {
                     urlLocation: 'https://luminus.nus.edu.sg/'),
                 HomePageBlock(
                     blockName: 'Coming Soon...',
-                    blockColor: Colors.greenAccent,
+                    blockColor: Colors.orangeAccent,
                     iconDisplay: Icon(Icons.refresh)),
               ],
             ),

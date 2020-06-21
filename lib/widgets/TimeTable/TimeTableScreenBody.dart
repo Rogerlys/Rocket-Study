@@ -24,7 +24,7 @@ class _TimeTableScreenBodyState extends State<TimeTableScreenBody> {
         .map((x) => TimelineModel(EventWidget(x, widget.delete),
             position: TimelineItemPosition.right,
             iconBackground: Colors.redAccent,
-            icon: Icon(Icons.blur_circular)))
+            ))
         .toList();
 
     return Row(
@@ -53,7 +53,7 @@ class _TimeTableScreenBodyState extends State<TimeTableScreenBody> {
         Container(
             height: MediaQuery.of(context).size.height * 0.55,
             width: MediaQuery.of(context).size.width * 0.85,
-            child: Timeline(children: items, position: TimelinePosition.Left)),
+            child: Timeline(children: items, position: TimelinePosition.Left, iconSize: 17,)),
       ],
     );
   }

@@ -28,7 +28,7 @@ class _EventWidgetState extends State<EventWidget> {
       borderRadius: BorderRadius.circular(50),
       child: Card(
           elevation: 50,
-          color: Colors.yellow[200],
+          color: Colors.green[50],
           child: ListTile(
             onLongPress: () => showDialog(
                 context: context,
@@ -51,7 +51,7 @@ class _EventWidgetState extends State<EventWidget> {
                     )),
             title: Text(
               this.widget.currentEvent.title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             subtitle: Text(
               this.widget.currentEvent.place,
@@ -60,7 +60,8 @@ class _EventWidgetState extends State<EventWidget> {
             trailing: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                color: Colors.blue[300],
+                border: Border.all(color: Color(0xff2d386b), width: 3),
+                color: Colors.white,
               ),
               width: MediaQuery.of(context).size.width * 0.16,
               height: MediaQuery.of(context).size.height,
@@ -68,7 +69,10 @@ class _EventWidgetState extends State<EventWidget> {
                 child: Text(
                   this.widget.currentEvent.time.format(context),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xff2d386b)),
                 ),
               ),
             ),
