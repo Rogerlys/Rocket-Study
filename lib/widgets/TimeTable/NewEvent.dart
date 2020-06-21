@@ -60,7 +60,9 @@ class NewEventState extends State<NewEvent> {
               );
             }).toList(),
             onChanged: (String value){
-              weekday = value;
+              setState(() {
+                weekday = value;
+              });
             },
             value: weekday
           ),

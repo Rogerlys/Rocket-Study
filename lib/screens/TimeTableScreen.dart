@@ -2,15 +2,13 @@ import 'package:actual/models/Pair.dart';
 import 'package:actual/widgets/TimeTable/NextEvent.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/TimeTable/EventWidget.dart';
 import '../widgets/TimeTable/NewEvent.dart';
-import '../widgets/TimeTable/Day.dart';
 import '../models/Event.dart';
+import '../widgets/TimeTable/TimeTableScreenBody.dart';
 
 class TimeTableScreen extends StatefulWidget {
   static const routeName = '/TimeTableScreen';
   final List<Pair> days;
-  int selectedDay = DateTime.now().weekday - 1; //default set as today
 
   TimeTableScreen(this.days);
   @override
@@ -80,46 +78,6 @@ class _TimeTableState extends State<TimeTableScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget timeTableScreenBody = Row(
-      children: <Widget>[
-        Container(
-            color: Colors.transparent,
-            height: MediaQuery.of(context).size.height * 0.55,
-            width: MediaQuery.of(context).size.width * 0.2,
-            child: Card(
-                color: Colors.transparent,
-                elevation: 50,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    for (int i = 0; i < widget.days.length; i++)
-                      GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              widget.selectedDay = i;
-                            });
-                          },
-                          child: Day(
-                              widget.selectedDay, i, widget.days[i].weekday))
-                  ],
-                ))),
-        Container(
-            height: MediaQuery.of(context).size.height * 0.55,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: SingleChildScrollView(
-                child: Column(
-              children: <Widget>[
-                SizedBox(height: 10),
-                for (int i = 0;
-                    i < widget.days[widget.selectedDay].events.length;
-                    i++)
-                  EventWidget(
-                      widget.days[widget.selectedDay].events[i], _delete)
-              ],
-            ))),
-      ],
-    );
-
     return Stack(
       children: <Widget>[
         Image.asset(
@@ -164,7 +122,7 @@ class _TimeTableState extends State<TimeTableScreen> {
                       ),
               ),
               SizedBox(height: 10),
-              timeTableScreenBody
+              TimeTableScreenBody(widget.days, _delete),
             ],
           ),
         ),
