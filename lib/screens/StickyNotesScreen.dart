@@ -43,7 +43,7 @@ class _StickNoteState extends State<StickNotesScreen> {
       Colors.blueGrey,
       Colors.amberAccent
     ];
-    int x =  Random().nextInt(11);
+    int x = Random().nextInt(11);
     setState(() {
       widget.notes
           .add(Note(DateTime.now().toString(), title, body, colours[x]));
@@ -102,10 +102,10 @@ class _StickNoteState extends State<StickNotesScreen> {
                         child: Text(
                           'Sticky Notes',
                           style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              fontStyle: FontStyle.italic,
-                              ),
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       )
                     ],
@@ -120,11 +120,15 @@ class _StickNoteState extends State<StickNotesScreen> {
             crossAxisSpacing: 8.0,
             children: <Widget>[
               for (var i = 0; i < widget.notes.length; i++)
-                NoteWidget(widget.notes[i], delete)
+                NoteWidget(widget.notes[widget.notes.length - i - 1], delete)
             ],
             staggeredTiles: <StaggeredTile>[
               for (var i = 0; i < widget.notes.length; i++)
-                StaggeredTile.count(2, calcNoteHeight(widget.notes[i].title, widget.notes[i].body))
+                StaggeredTile.count(
+                    2,
+                    calcNoteHeight(
+                        widget.notes[widget.notes.length - i - 1].title,
+                        widget.notes[widget.notes.length - i - 1].body))
             ],
           )
         ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:timeline_list/timeline.dart';
+import 'package:timeline_list/timeline_model.dart';
 
 import '../../models/Pair.dart';
 import '../../widgets/TimeTable/Day.dart';
@@ -18,12 +20,19 @@ class TimeTableScreenBody extends StatefulWidget {
 class _TimeTableScreenBodyState extends State<TimeTableScreenBody> {
   @override
   Widget build(BuildContext context) {
+    List<TimelineModel> items = widget.days[widget.selectedDay].events
+        .map((x) => TimelineModel(EventWidget(x, widget.delete),
+            position: TimelineItemPosition.right,
+            iconBackground: Colors.redAccent,
+            icon: Icon(Icons.blur_circular)))
+        .toList();
+
     return Row(
       children: <Widget>[
         Container(
             color: Colors.transparent,
             height: MediaQuery.of(context).size.height * 0.55,
-            width: MediaQuery.of(context).size.width * 0.2,
+            width: MediaQuery.of(context).size.width * 0.15,
             child: Card(
                 color: Colors.transparent,
                 elevation: 50,
@@ -43,18 +52,8 @@ class _TimeTableScreenBodyState extends State<TimeTableScreenBody> {
                 ))),
         Container(
             height: MediaQuery.of(context).size.height * 0.55,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: SingleChildScrollView(
-                child: Column(
-              children: <Widget>[
-                SizedBox(height: 10),
-                for (int i = 0;
-                    i < widget.days[widget.selectedDay].events.length;
-                    i++)
-                  EventWidget(
-                      widget.days[widget.selectedDay].events[i], widget.delete)
-              ],
-            ))),
+            width: MediaQuery.of(context).size.width * 0.85,
+            child: Timeline(children: items, position: TimelinePosition.Left)),
       ],
     );
   }
