@@ -73,6 +73,14 @@ class _StickNoteState extends State<StickNotesScreen> {
   }
 
   @override
+  void initState() {
+    setState(() {
+      
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(

@@ -15,14 +15,6 @@ class NoteWidget extends StatefulWidget {
 
 class _NoteWidgetState extends State<NoteWidget> {
   @override
-  void dispose() {
-    setState(() {
-      
-    });
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     void goToNotesScreen(Note note) async {
       await Navigator.push(
