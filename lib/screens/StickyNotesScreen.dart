@@ -33,12 +33,12 @@ class _StickNoteState extends State<StickNotesScreen> {
   void addNewNote(String title, String body) {
     final List<Color> colours = [
       Color.fromRGBO(252, 252, 154, 1),
-      Color.fromRGBO(252, 252, 252, 0.5),
-      Color.fromRGBO(252, 183, 249, 0.5),
-      Color.fromRGBO(252, 222, 183, 0.5),
-      Color.fromRGBO(252, 196, 183, 0.5),
-      Color.fromRGBO(159, 242, 156, 0.5),
-      Color.fromRGBO(242, 156, 156, 0.5),
+      Color.fromRGBO(252, 252, 252, 1),
+      Color.fromRGBO(252, 183, 249, 1),
+      Color.fromRGBO(252, 222, 183, 1),
+      Color.fromRGBO(252, 196, 183, 1),
+      Color.fromRGBO(159, 242, 156, 1),
+      Color.fromRGBO(242, 156, 156, 1),
       Colors.redAccent,
       Colors.blue[50],
       Colors.blueGrey,

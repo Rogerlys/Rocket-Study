@@ -13,7 +13,7 @@ class NoteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     void goToNotesScreen(Note note) async {
       await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => NoteDetail(note)));
+          context, MaterialPageRoute(builder: (context) => NoteDetail(note, delete)));
     }
 
     return GestureDetector(
