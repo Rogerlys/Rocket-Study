@@ -59,10 +59,17 @@ class _StickNoteState extends State<StickNotesScreen> {
 
   num calcNoteHeight(String title, String body) {
     int length = title.length + body.length;
+    if (body.contains('\n')) {
+      length += 50;
+    }
+
     if (length < 30) return 1;
     if (length < 50) return 1.5;
     if (length < 100) return 2;
     if (length > 100) return 2.5;
+    else {
+      return 2.5;
+    }
   }
 
   @override

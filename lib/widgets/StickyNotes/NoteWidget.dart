@@ -3,21 +3,36 @@ import 'package:flutter/material.dart';
 import '../../models/Note.dart';
 import '../../screens/NoteDetail.dart';
 
-class NoteWidget extends StatelessWidget {
+class NoteWidget extends StatefulWidget {
   final Note note;
   final Function delete;
 
   NoteWidget(this.note, this.delete);
 
   @override
+  _NoteWidgetState createState() => _NoteWidgetState();
+}
+
+class _NoteWidgetState extends State<NoteWidget> {
+  @override
+  void dispose() {
+    setState(() {
+      
+    });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     void goToNotesScreen(Note note) async {
       await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => NoteDetail(note, delete)));
+          context,
+          MaterialPageRoute(
+              builder: (context) => NoteDetail(note, widget.delete)));
     }
 
     return GestureDetector(
-      onTap: () => goToNotesScreen(note),
+      onTap: () => goToNotesScreen(widget.note),
       onLongPress: () => showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
@@ -31,7 +46,7 @@ class NoteWidget extends StatelessWidget {
                       child: Text('No')),
                   FlatButton(
                       onPressed: () {
-                        delete(note.id);
+                        widget.delete(widget.note.id);
                         Navigator.of(ctx).pop();
                       },
                       child: Text('Yes'))
@@ -45,19 +60,20 @@ class NoteWidget extends StatelessWidget {
             width: 3,
           ),
           borderRadius: BorderRadius.circular(10.0),
-          color: note.col,
+          color: widget.note.col,
         ),
         child: Column(
           children: <Widget>[
             Text(
-              note.title,
+              widget.note.title,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Text(
-              note.body.length < 100
-                  ? note.body
-                  : note.body.substring(0, 100) + '\n ....',
+              widget.note.body.length < 100
+                  ? widget.note.body
+                  : widget.note.body.substring(0, 100) + '\n ....',
               style: TextStyle(color: Colors.black, fontSize: 18),
+              maxLines: 7
             ),
           ],
         ),
