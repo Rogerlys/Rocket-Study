@@ -46,22 +46,44 @@ class NoteDetailState extends State<NoteDetail> {
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-            onPressed: () {
-              Navigator.pop(context, true);
-              Navigator.popAndPushNamed(context, StickNotesScreen.routeName);
-            }),
+          icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => newTitle == null && newBody == null
+              ? Navigator.pop(context, true)
+              : showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                        title: Text('Changes Detected'),
+                        content: Text(
+                            'Do you want to save your changes or discard them?'),
+                        actions: <Widget>[
+                          FlatButton(
+                              onPressed: () {
+                                Navigator.of(ctx).popUntil(ModalRoute.withName('/Stick-Notes'));
+                                Navigator.popAndPushNamed(
+                                    context, StickNotesScreen.routeName);
+                              },
+                              child: Text('Discard')),
+                          FlatButton(
+                              onPressed: () {
+                                onSubmit();
+                                Navigator.of(ctx).popUntil(ModalRoute.withName('/Stick-Notes'));
+                                Navigator.popAndPushNamed(
+                                    context, StickNotesScreen.routeName);
+                              },
+                              child: Text('Save'))
+                        ],
+                      )),
+        ),
         actions: <Widget>[
           //added stuff below
           GestureDetector(
-            child: Center(
-              child: Text(
-                'Save',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              child: Center(
+                child: Text(
+                  'Save',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-          onTap: () => onSubmit()
-          ),
+              onTap: () => onSubmit()),
           IconButton(
               icon: Icon(Icons.delete),
               color: Colors.black,
