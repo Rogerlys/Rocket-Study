@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:actual/models/Note.dart';
 
+import 'StickyNotesScreen.dart';
+
 class NoteDetail extends StatefulWidget {
   Note note;
   Function delete;
@@ -15,13 +17,20 @@ class NoteDetail extends StatefulWidget {
 class NoteDetailState extends State<NoteDetail> {
   TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
+  String newTitle;
+  String newBody;
 
   void updateTitle() {
-    widget.note.title = titleController.text;
+    newTitle = titleController.text;
   }
 
   void updateBody() {
-    widget.note.body = bodyController.text;
+    newBody = bodyController.text;
+  }
+
+  void onSubmit() {
+    if (newTitle != null) widget.note.title = newTitle;
+    if (newBody != null) widget.note.body = newBody;
   }
 
   @override
@@ -40,6 +49,7 @@ class NoteDetailState extends State<NoteDetail> {
             icon: Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
               Navigator.pop(context, true);
+              Navigator.popAndPushNamed(context, StickNotesScreen.routeName);
             }),
         actions: <Widget>[
           //added stuff below
@@ -50,7 +60,7 @@ class NoteDetailState extends State<NoteDetail> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
-          onTap: (){}
+          onTap: () => onSubmit()
           ),
           IconButton(
               icon: Icon(Icons.delete),
