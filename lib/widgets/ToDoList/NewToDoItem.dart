@@ -35,7 +35,7 @@ class _NewToDoItemState extends State<NewToDoItem> {
         return;
       }
       setState(() {
-        _deadline = pickedDate.add(new Duration(days: 1));
+        _deadline = pickedDate;
       });
     });
   }

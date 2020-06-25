@@ -65,9 +65,9 @@ class _ToDoItemState extends State<ToDoItem> {
                           .difference(DateTime.now())
                           .inDays
                           .toString() +
-                      '\n days',
+                      '\n day(s)',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             ),
             title: Text(
               widget.toDo.title,

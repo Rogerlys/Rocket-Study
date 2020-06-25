@@ -58,7 +58,8 @@ class NoteDetailState extends State<NoteDetail> {
                         actions: <Widget>[
                           FlatButton(
                               onPressed: () {
-                                Navigator.of(ctx).popUntil(ModalRoute.withName('/Stick-Notes'));
+                                Navigator.of(ctx).popUntil(
+                                    ModalRoute.withName('/Stick-Notes'));
                                 Navigator.popAndPushNamed(
                                     context, StickNotesScreen.routeName);
                               },
@@ -66,7 +67,8 @@ class NoteDetailState extends State<NoteDetail> {
                           FlatButton(
                               onPressed: () {
                                 onSubmit();
-                                Navigator.of(ctx).popUntil(ModalRoute.withName('/Stick-Notes'));
+                                Navigator.of(ctx).popUntil(
+                                    ModalRoute.withName('/Stick-Notes'));
                                 Navigator.popAndPushNamed(
                                     context, StickNotesScreen.routeName);
                               },
@@ -83,7 +85,11 @@ class NoteDetailState extends State<NoteDetail> {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              onTap: () => onSubmit()),
+              onTap: () {
+                onSubmit();
+                Navigator.popUntil(context, ModalRoute.withName('/Stick-Notes'));
+                Navigator.popAndPushNamed(context, StickNotesScreen.routeName);
+              }),
           IconButton(
               icon: Icon(Icons.delete),
               color: Colors.black,
