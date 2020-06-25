@@ -42,6 +42,16 @@ class NoteDetailState extends State<NoteDetail> {
               Navigator.pop(context, true);
             }),
         actions: <Widget>[
+          //added stuff below
+          GestureDetector(
+            child: Center(
+              child: Text(
+                'Save',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+          onTap: (){}
+          ),
           IconButton(
               icon: Icon(Icons.delete),
               color: Colors.black,
