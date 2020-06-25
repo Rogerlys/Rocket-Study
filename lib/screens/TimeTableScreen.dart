@@ -88,20 +88,26 @@ class _TimeTableState extends State<TimeTableScreen> {
         backgroundColor: Colors.greenAccent,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(80),
-                  bottomRight: Radius.circular(80)),
-              //Use stack here to add the content at the top which can be the next lesson details.
-              child: _nextLesson() == null
-                  ? Image.asset(
+      body: Column(
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(80),
+                bottomRight: Radius.circular(80)),
+            //Use stack here to add the content at the top which can be the next lesson details.
+            child: _nextLesson() == null
+                ? Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    width: MediaQuery.of(context).size.width,
+                    child: Image.asset(
                       'assets/images/ToDoScreenAppBar.jpg',
                       fit: BoxFit.cover, //can be Boxfit.fill
-                    )
-                  : Stack(
+                    ),
+                  )
+                : Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    width: MediaQuery.of(context).size.width,
+                    child: Stack(
                       children: <Widget>[
                         Container(
                           alignment: Alignment.center,
@@ -113,11 +119,10 @@ class _TimeTableState extends State<TimeTableScreen> {
                         NextEvent(_nextLesson())
                       ],
                     ),
-            ),
-            SizedBox(height: 10),
-            TimeTableScreenBody(widget.days, _delete),
-          ],
-        ),
+                  ),
+          ),
+          TimeTableScreenBody(widget.days, _delete),
+        ],
       ),
     );
   }

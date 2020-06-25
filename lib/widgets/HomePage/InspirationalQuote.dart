@@ -12,7 +12,7 @@ class InspirationalQuote extends StatelessWidget {
       margin: EdgeInsets.all(20),
       child: Container(
         width: 270,
-        height: 180,
+        height: 210,
         alignment: Alignment.center,
         padding: EdgeInsets.all(10),
         child: Column(

@@ -24,7 +24,7 @@ class HomePageScreen extends StatelessWidget {
               backgroundColor: Colors.transparent,
               centerTitle: false,
               forceElevated: false,
-              expandedHeight: 250,
+              expandedHeight: 290,
               floating: true,
               pinned: false,
               title: Text(
