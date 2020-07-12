@@ -62,6 +62,7 @@ class _ToDoItemState extends State<ToDoItem> {
               width: 70,
               child: Text(
                   widget.toDo.date
+                          .add(new Duration(days: 1)) //offset by 1.
                           .difference(DateTime.now())
                           .inDays
                           .toString() +
