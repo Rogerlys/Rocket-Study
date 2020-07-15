@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:actual/models/Note.dart';
-
 import 'StickyNotesScreen.dart';
 
 class NoteDetail extends StatefulWidget {
@@ -28,7 +30,15 @@ class NoteDetailState extends State<NoteDetail> {
     newBody = bodyController.text;
   }
 
-  void onSubmit() {
+  Future<void> onSubmit() async {
+    final url =
+        'https://todo-7b300.firebaseio.com/notes/${widget.note.id}.json';
+    final response = await http.patch(url,
+        body: json.encode({
+          'title': newTitle != null ? newTitle : widget.note.title,
+          'body': newBody != null ? newBody : widget.note.body,
+        }));
+
     if (newTitle != null) widget.note.title = newTitle;
     if (newBody != null) widget.note.body = newBody;
   }
@@ -87,7 +97,8 @@ class NoteDetailState extends State<NoteDetail> {
               ),
               onTap: () {
                 onSubmit();
-                Navigator.popUntil(context, ModalRoute.withName('/Stick-Notes'));
+                Navigator.popUntil(
+                    context, ModalRoute.withName('/Stick-Notes'));
                 Navigator.popAndPushNamed(context, StickNotesScreen.routeName);
               }),
           IconButton(

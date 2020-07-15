@@ -1,13 +1,15 @@
+import 'dart:convert';
 import 'package:actual/widgets/StickyNotes/NoteWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:actual/models/Note.dart';
 import '../widgets/StickyNotes/NewNote.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 class StickNotesScreen extends StatefulWidget {
   static const routeName = "/Stick-Notes";
-  final List<Note> notes;
+  List<Note> notes;
   StickNotesScreen(this.notes);
 
   @override
@@ -17,6 +19,22 @@ class StickNotesScreen extends StatefulWidget {
 }
 
 class _StickNoteState extends State<StickNotesScreen> {
+  var _isInit = true;
+
+  final List<Color> colours = [
+    Color.fromRGBO(252, 252, 154, 1),
+    Color.fromRGBO(252, 252, 252, 1),
+    Color.fromRGBO(252, 183, 249, 1),
+    Color.fromRGBO(252, 222, 183, 1),
+    Color.fromRGBO(252, 196, 183, 1),
+    Color.fromRGBO(159, 242, 156, 1),
+    Color.fromRGBO(242, 156, 156, 1),
+    Colors.redAccent,
+    Colors.blue[50],
+    Colors.blueGrey,
+    Colors.amberAccent
+  ];
+
   void startAddNewNote(BuildContext context) {
     showModalBottomSheet(
         isScrollControlled: true,
@@ -30,28 +48,27 @@ class _StickNoteState extends State<StickNotesScreen> {
         });
   }
 
-  void addNewNote(String title, String body) {
-    final List<Color> colours = [
-      Color.fromRGBO(252, 252, 154, 1),
-      Color.fromRGBO(252, 252, 252, 1),
-      Color.fromRGBO(252, 183, 249, 1),
-      Color.fromRGBO(252, 222, 183, 1),
-      Color.fromRGBO(252, 196, 183, 1),
-      Color.fromRGBO(159, 242, 156, 1),
-      Color.fromRGBO(242, 156, 156, 1),
-      Colors.redAccent,
-      Colors.blue[50],
-      Colors.blueGrey,
-      Colors.amberAccent
-    ];
+  Future<void> addNewNote(String title, String body) async {
     int x = Random().nextInt(11);
+    const url = 'https://todo-7b300.firebaseio.com/notes.json';
+    final response = await http.post(url,
+        body: json.encode({
+          'title': title,
+          'body': body,
+          'color': x.toString(), //storing the index of the colours
+        }));
+
+    final item =
+        Note(json.decode(response.body)['name'], title, body, colours[x]);
+
     setState(() {
-      widget.notes
-          .add(Note(DateTime.now().toString(), title, body, colours[x]));
+      widget.notes.add(item);
     });
   }
 
   void delete(String id) {
+    final url = 'https://todo-7b300.firebaseio.com/notes/$id.json';
+    http.delete(url);
     setState(() {
       widget.notes.removeWhere((item) => id == item.id);
     });
@@ -65,7 +82,8 @@ class _StickNoteState extends State<StickNotesScreen> {
 
     if (length < 50) return 1.5;
     if (length < 100) return 2;
-    if (length > 100) return 2.5;
+    if (length > 100)
+      return 2.5;
     else {
       return 2.5;
     }
@@ -73,10 +91,39 @@ class _StickNoteState extends State<StickNotesScreen> {
 
   @override
   void initState() {
-    setState(() {
-      
-    });
+    setState(() {});
     super.initState();
+  }
+
+  Future<void> fetchAndSetNote() async {
+    const url = 'https://todo-7b300.firebaseio.com/notes.json';
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Note> loadedNotes = [];
+
+      if (extractedData != null) {
+        extractedData.forEach((id, noteData) {
+          loadedNotes.add(Note(id, noteData['title'], noteData['body'],
+              colours[int.parse(noteData['color'])]));
+        });
+      }
+
+      setState(() {
+        widget.notes = loadedNotes;
+      });
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      fetchAndSetNote();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override

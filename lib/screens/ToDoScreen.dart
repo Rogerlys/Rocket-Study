@@ -25,8 +25,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
   var _isInit = true;
 
   Future<void> _addNewToDoItem(String title, DateTime deadline) async {
-    //237 using http post
-    //240 adding loading symbol
     const url = 'https://todo-7b300.firebaseio.com/todo.json';
     final response = await http.post(url,
         body: json.encode({
@@ -53,7 +51,6 @@ class _ToDoScreenState extends State<ToDoScreen> {
   }
 
   void _removeItem(String id) {
-    //247
     final url = 'https://todo-7b300.firebaseio.com/todo/$id.json';
     http.delete(url);
     setState(() {
@@ -75,17 +72,12 @@ class _ToDoScreenState extends State<ToDoScreen> {
         date: completed.date);
 
     setState(() {
-      widget._completedTask.add(completed);
+      widget._completedTask.add(item);
     });
   }
 
   @override
   void initState() {
-    /*
-    * 243 fetch data from http.
-    * Future.delayed(Duaration.zero).then((_) { to the fetching. this is a hack})
-    * correct way is use didUpdateDepencies.
-    */
     widget._userToDo.removeWhere(
         (element) => element.date.difference(DateTime.now()).inDays == 0);
     super.initState();
