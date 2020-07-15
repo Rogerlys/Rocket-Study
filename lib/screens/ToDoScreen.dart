@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../widgets/ToDoList/AppDrawer.dart';
 import '../models/ToDo.dart';
@@ -9,7 +12,7 @@ import '../widgets/ToDoList/ToDoItem.dart';
 class ToDoScreen extends StatefulWidget {
   static const routeName = '/todo-screen';
 
-  final List<ToDo> _userToDo;
+  List<ToDo> _userToDo;
   final List<ToDo> _completedTask;
 
   ToDoScreen(this._userToDo, this._completedTask);
@@ -19,9 +22,21 @@ class ToDoScreen extends StatefulWidget {
 }
 
 class _ToDoScreenState extends State<ToDoScreen> {
-  void _addNewToDoItem(String title, DateTime deadline) {
-    final item =
-        ToDo(id: DateTime.now().toString(), title: title, date: deadline);
+  var _isInit = true;
+
+  Future<void> _addNewToDoItem(String title, DateTime deadline) async {
+    //237 using http post
+    //240 adding loading symbol
+    const url = 'https://todo-7b300.firebaseio.com/todo.json';
+    final response = await http.post(url,
+        body: json.encode({
+          // 'id': DateTime.now().toString(),
+          'title': title,
+          'date': deadline.toString(),
+        }));
+
+    final item = ToDo(
+        id: json.decode(response.body)['name'], title: title, date: deadline);
 
     setState(() {
       widget._userToDo.add(item);
@@ -38,12 +53,27 @@ class _ToDoScreenState extends State<ToDoScreen> {
   }
 
   void _removeItem(String id) {
+    //247
+    final url = 'https://todo-7b300.firebaseio.com/todo/$id.json';
+    http.delete(url);
     setState(() {
       widget._userToDo.removeWhere((item) => item.id == id);
     });
   }
 
-  void _addToCompletedTask(ToDo completed) {
+  Future<void> _addToCompletedTask(ToDo completed) async {
+    const url = 'https://todo-7b300.firebaseio.com/completedTask.json';
+    final response = await http.post(url,
+        body: json.encode({
+          'title': completed.title,
+          'date': completed.date.toString(),
+        }));
+
+    final item = ToDo(
+        id: json.decode(response.body)['name'],
+        title: completed.title,
+        date: completed.date);
+
     setState(() {
       widget._completedTask.add(completed);
     });
@@ -51,9 +81,48 @@ class _ToDoScreenState extends State<ToDoScreen> {
 
   @override
   void initState() {
+    /*
+    * 243 fetch data from http.
+    * Future.delayed(Duaration.zero).then((_) { to the fetching. this is a hack})
+    * correct way is use didUpdateDepencies.
+    */
     widget._userToDo.removeWhere(
         (element) => element.date.difference(DateTime.now()).inDays == 0);
     super.initState();
+  }
+
+  Future<void> fetchAndSetToDo() async {
+    const url = 'https://todo-7b300.firebaseio.com/todo.json';
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<ToDo> loadedToDo = [];
+      
+      if (extractedData != null) {
+        extractedData.forEach((id, toDoData) {
+          loadedToDo.add(ToDo(
+              id: id,
+              title: toDoData['title'],
+              date: DateTime.parse(toDoData['date'])));
+        });
+      }
+
+      setState(() {
+        widget._userToDo = loadedToDo;
+        widget._userToDo.sort((x, y) => x.date.compareTo(y.date));
+      });
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      fetchAndSetToDo();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   Image appBarImage(BuildContext context) {
@@ -104,7 +173,10 @@ class _ToDoScreenState extends State<ToDoScreen> {
               title: Text(
                 'To-Do List!',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24, color: Colors.white),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.white),
               ),
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.parallax,

@@ -1,14 +1,57 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/ToDo.dart';
 
-class CompletedTaskScreen extends StatelessWidget {
+class CompletedTaskScreen extends StatefulWidget {
   static const routeName = '/IncompletedTaskScreen';
 
-  final List<ToDo> completedTask;
+  List<ToDo> completedTask;
 
   CompletedTaskScreen(this.completedTask);
+
+  @override
+  _CompletedTaskScreenState createState() => _CompletedTaskScreenState();
+}
+
+class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
+  var _isInit = true;
+
+  Future<void> fetchAndCompletedTask() async {
+    const url = 'https://todo-7b300.firebaseio.com/completedTask.json';
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<ToDo> loadedCompletedTask = [];
+      
+      if (extractedData != null) {
+        extractedData.forEach((id, toDoData) {
+          loadedCompletedTask.add(ToDo(
+              id: id,
+              title: toDoData['title'],
+              date: DateTime.parse(toDoData['date'])));
+        });
+      }
+
+      setState(() {
+        widget.completedTask = loadedCompletedTask;
+      });
+    } catch (error) {
+      throw (error);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      fetchAndCompletedTask();
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +62,9 @@ class CompletedTaskScreen extends StatelessWidget {
             title: Text('Completed Tasks',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
         body: ListView(
-            children:
-                completedTask.map((item) => CompletedItem(item)).toList()));
+            children: widget.completedTask
+                .map((item) => CompletedItem(item))
+                .toList()));
   }
 }
 
